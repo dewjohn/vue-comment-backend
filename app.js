@@ -4,6 +4,7 @@ const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
+const koaBody = require('koa-body')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
 const index = require('./routes/index')
@@ -16,6 +17,13 @@ onerror(app)
 app.use(cors({
   origin:['http://localhost:8081'], 
   credentials: true //允许跨域带cookie
+}))
+
+app.use(koaBody({
+  multipart: true, // 支持文件上传
+  formidable: {
+    maxFieldsSize: 200*1024*1024 // 最大2M
+  }
 }))
 
 
